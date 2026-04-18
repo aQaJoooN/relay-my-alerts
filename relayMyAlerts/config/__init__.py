@@ -1,0 +1,1 @@
+from relayMyAlerts.config.config import Config
