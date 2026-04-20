@@ -1,6 +1,7 @@
 from relayMyAlerts import api
 
 from relayMyAlerts.view.mattermost import MattermostResource
+from relayMyAlerts.view.zoho import ZohoResource
 from relayMyAlerts.view.zulip import ZulipResource
 from relayMyAlerts.view.all import AllResource
 
@@ -9,6 +10,13 @@ api.add_resource(
     "/mattermost",
     methods=["GET","POST"],
     endpoint="mattermost"
+)
+
+api.add_resource(
+    ZohoResource,
+    "/zoho",
+    methods=["GET","POST"],
+    endpoint="zoho"
 )
 
 api.add_resource(
