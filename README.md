@@ -1,11 +1,11 @@
 ## features
-these im is added
+These IMs are added
 * Zulip
 * Mattermost
 * Zoho
 
 ## Requirements
-need this Environment varibales
+Need this Environment varibales to be configured.
 
 * RMA_ENV
 * RMA_DEBUG
