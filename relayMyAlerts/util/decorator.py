@@ -1,7 +1,7 @@
 
 
 def alert_decorator(old_message):
-    # Severity → icon mapping
+    
     severity_map = {
         "warning": "🟡 WARNING 🟡",
         "major": "🟠 MAJOR 🟠",
@@ -24,10 +24,8 @@ def alert_decorator(old_message):
 
         starts_at = alert.get("startsAt", "N/A")
 
-        # Pick icon for severity
         severity_title = severity_map.get(severity, severity.upper())
 
-        # Format the alert message
         formatted = f"""
     {severity_title} {alert_name}
 ━━━━━━━━━━━━━━━━━━━━
