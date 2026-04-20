@@ -3,6 +3,7 @@ from flask import abort,request
 import requests
 import logging
 from relayMyAlerts.config import Config
+from relayMyAlerts.util.decorator import alert_decorator
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -19,24 +20,33 @@ def create_message(im):
         if not hasattr(Config, 'MATTERMOST_WEBHOOK_URL') or not Config.MATTERMOST_WEBHOOK_URL:
             logging.error("RMA_MATTERMOST_WEBHOOK_URL not configured")
             return {"error": "Webhook URL not configured"}, 500
-    if im == "zulip":
+    elif im == "zulip":
         if not hasattr(Config, 'ZULIP_API_URL') or not Config.ZULIP_API_URL:
             logging.error("RMA_ZULIP_API_URL not configured")
             return {"error": "Zulip Api URL not configured"}, 500
-        if not hasattr(Config, 'ZULIP_BOT_EMAIL') or not Config.ZULIP_BOT_EMAIL:
+        elif not hasattr(Config, 'ZULIP_BOT_EMAIL') or not Config.ZULIP_BOT_EMAIL:
             logging.error("RMA_ZULIP_BOT_EMAIL not configured")
             return {"error": "Zulip Bot Email not configured"}, 500
-        if not hasattr(Config, 'ZULIP_API_KEY') or not Config.ZULIP_API_KEY:
+        elif not hasattr(Config, 'ZULIP_API_KEY') or not Config.ZULIP_API_KEY:
             logging.error("RMA_ZULIP_API_KEY not configured")
             return {"error": "Zulip Api Key not configured"}, 500
-        if not hasattr(Config, 'ZULIP_CHANNEL') or not Config.ZULIP_CHANNEL:
+        elif not hasattr(Config, 'ZULIP_CHANNEL') or not Config.ZULIP_CHANNEL:
             logging.error("RMA_ZULIP_CHANNEL not configured")
             return {"error": "Zulip Channel not configured"}, 500
+    elif im == "zoho":
+        if not hasattr(Config, 'ZOHO_WEBHOOK_URL') or not Config.ZOHO_WEBHOOK_URL:
+            logging.error("RMA_ZOHO_WEBHOOK_URL not configured")
+            return {"error": "Zoho URL not configured"}, 500
+    else:
+        return {"service": im, "status": "error", "message": "Instant messaging service is not implemented yet."}, 500
     
-    logging.info(f"Received message data for {im} : {data}")
+    message = None
+    if "alerts" in data:
+        message = alert_decorator(data)
+    else:
+        message = f"non structured input: {data}"
 
-    # decorate massage
-    message = f"🔥 *Alert:* {data}"
+    logging.info(f"Received message data for {im} : {message}")
 
     result = None
     for attempt in range(Config.RETRY):
@@ -82,6 +92,16 @@ def send_message(im,message_content):
             Config.MATTERMOST_WEBHOOK_URL, 
             json=payload, 
             timeout=Config.TIMEOUT)
+    elif im == "zoho":
+        payload = {
+            "text": message_content
+        }
+        resp = session.post(
+            Config.ZOHO_WEBHOOK_URL, 
+            json=payload, 
+            timeout=Config.TIMEOUT)
+    else:
+        return {"service": im, "status": "error", "message": "Instant messaging service is not implemented yet."}
     try:
         #resp.raise_for_status()
         if resp.status_code == 200:

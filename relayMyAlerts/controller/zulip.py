@@ -1,21 +1,24 @@
 from flask import jsonify
-import logging
 from relayMyAlerts.config import Config
 from relayMyAlerts.util import create_message
-
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+import inspect
 
 class ZulipController:
     def create_zulip_message():
         """
         Docstring for create_zulip_message
         """
-        return create_message("zulip")
+        if Config.ZULIP_ENABLED == 1:
+            return create_message("zulip")
+        elif inspect.currentframe().f_back.f_code.co_name == "create_message":
+            return {"info": "Zulip is not Enabled"},200
+        else:
+            return {"error": "Zulip is not Enabled"},500
 
     
     def list_zulip_config():
-        return jsonify({"ZULIP_API_KEY": len(Config.ZULIP_API_KEY) * "*" , 
+        return jsonify({"ZULIP_ENABLED": Config.ZULIP_ENABLED, 
+                        "ZULIP_API_KEY": len(Config.ZULIP_API_KEY) * "*" , 
                         "ZULIP_API_URL": Config.ZULIP_API_URL, 
                         "ZULIP_BOT_EMAIL": Config.ZULIP_BOT_EMAIL, 
                         "ZULIP_CHANNEL": Config.ZULIP_CHANNEL, 
