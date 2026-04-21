@@ -7,6 +7,8 @@ These IMs are added
 ## Requirements
 Need this Environment varibales to be configured.
 
+* RMA_BIND_ADDRESS
+* RMA_NUM_WOEKERS
 * RMA_ENV
 * RMA_DEBUG
 * RMA_TESTING

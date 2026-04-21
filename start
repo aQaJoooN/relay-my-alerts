@@ -1,0 +1,6 @@
+#!/bin/bash
+
+gunicorn -b RMA_BIND_ADDRESS \
+    -w RMA_NUM_WOEKERS \
+    --error-logfile - --acess-logfile \
+    - "relayMyAlerts:create_app()"
