@@ -3,7 +3,7 @@ from flask import abort,request
 import requests
 import logging
 from relayMyAlerts.config import Config
-from relayMyAlerts.util.decorator import alert_decorator
+from relayMyAlerts.util.message_decorator import alert_decorator
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
