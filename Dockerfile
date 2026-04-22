@@ -10,6 +10,7 @@ ENV RMA_BIND_ADDRESS=0.0.0.0:80
 ENV RMA_NUM_WOEKERS=4
 
 RUN pip install -U pip  \
-   && pip install -r requirements.txt
+   && pip install -r requirements.txt \
+   && chmod +x start
 
 CMD ./start
