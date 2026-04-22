@@ -29,6 +29,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/relay-my-alert:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/relay-my-alert:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/relay-my-alerts:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/relay-my-alerts:${{ github.sha }}
 
