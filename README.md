@@ -1,3 +1,6 @@
+## docker usage
+fill `docker-compose.yaml` and use `docker compose up -d` command simply.
+
 ## features
 These IMs are added
 * Zulip
