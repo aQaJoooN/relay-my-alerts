@@ -6,11 +6,6 @@ services:
     ports:
       - "8080:80"
     environment:
-      - RMA_ENV=production
-      - RMA_DEBUG=0
-      - RMA_TESTING=0
-      - RMA_TIMEOUT=10
-      - RMA_RETRY=5
       - RMA_ZULIP_ENABLED=**********
       - RMA_ZULIP_API_URL=***********
       - RMA_ZULIP_BOT_EMAIL=************
@@ -21,5 +16,3 @@ services:
       - RMA_MATTERMOST_WEBHOOK_URL=*********
       - RMA_ZOHO_ENABLED=**********
       - RMA_ZOHO_WEBHOOK_URL=**********
-      - RMA_BIND_ADDRESS=0.0.0.0:80
-      - RMA_NUM_WOEKERS=4

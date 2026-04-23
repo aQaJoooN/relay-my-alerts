@@ -11,6 +11,7 @@ These IMs are added
 Need this Environment varibales to be configured.
 
 * RMA_BIND_ADDRESS
+* RMA_BIND_PORT
 * RMA_NUM_WOEKERS
 * RMA_ENV
 * RMA_DEBUG
