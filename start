@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gunicorn --bind $RMA_BIND_ADDRESS \
+gunicorn --bind $RMA_BIND_ADDRESS:$RMA_BIND_PORT \
     --workers $RMA_NUM_WOEKERS \
     --error-logfile - --access-logfile \
     - "relayMyAlerts:create_app()"
