@@ -1,6 +1,9 @@
 FROM python:3.9-slim
 
-RUN mkdir -p /opt/app
+EXPOSE 8080
+
+RUN mkdir -p /opt/app \
+    && useradd -M -d /opt/app relayAlerts
 WORKDIR /opt/app
 
 ENV RMA_BIND_ADDRESS=0.0.0.0
@@ -10,9 +13,7 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-ARG APP_PORT=80
-EXPOSE $APP_PORT
-ENV RMA_BIND_PORT=$APP_PORT
+USER relayAlerts:relayAlerts
 
 COPY . .
 
