@@ -13,10 +13,10 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-USER relayAlerts:relayAlerts
-
 COPY . .
 
 RUN chmod +x start
+
+USER relayAlerts:relayAlerts
 
 CMD ./start
