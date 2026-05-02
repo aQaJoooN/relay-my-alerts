@@ -1,6 +1,6 @@
-FROM python:3.9-slim
+FROM python:3.14-slim
 
-EXPOSE 8080
+EXPOSE 80
 
 RUN mkdir -p /opt/app \
     && useradd -M -d /opt/app relayAlerts
