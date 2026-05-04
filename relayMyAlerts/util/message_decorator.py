@@ -8,7 +8,7 @@ def alert_decorator(old_message):
         "critical": "🔴 CRITICAL 🔴",
         "resolved": "✅ RESOLVED ✅"
     }
-    out_message = []
+    out_message = ""
     for alert in old_message.get("alerts", []):
         labels = alert.get("labels", {})
         annotations = alert.get("annotations", {})
@@ -26,6 +26,8 @@ def alert_decorator(old_message):
 
         severity_title = severity_map.get(severity, severity.upper())
 
+        generatorURL = alert.get("generatorURL", "N/A")
+
         formatted = f"""
     {severity_title} {alert_name}
 ━━━━━━━━━━━━━━━━━━━━
@@ -36,7 +38,9 @@ def alert_decorator(old_message):
 📝 **Summary:** {summary}
 📋 **Details:** {description}
 ⏰ Started: {starts_at}
-📊 [Dashboard](http://grafana.com/dashboard)
+📊 [Dashboard]({generatorURL})
+####################################################
+{out_message}
 """.strip()
         out_message = formatted
     
